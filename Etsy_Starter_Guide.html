@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Etsy Starter Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+:root{
+  --bg:#17142a; --bg-2:#201c38; --card:#262142; --line:#3a3460;
+  --fg:#faf6ee; --muted:#bdb7d2; --accent:#ffcf40; --ink:#16131f; --ok:#5fd39a; --danger:#ff6b6b;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --body:"DM Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:radial-gradient(60rem 40rem at 10% -10%,#3a2a5e 0%,transparent 60%),radial-gradient(50rem 40rem at 110% 40%,#4a2d2a 0%,transparent 55%);
+  background-attachment:fixed;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px 120px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(2.1rem,7vw,3.2rem);font-weight:800}
+h2{font-size:clamp(1.6rem,5vw,2.1rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.hl{color:var(--accent)} .muted{color:var(--muted)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.stack{display:flex;flex-direction:column;gap:18px}
+
+/* top */
+.top{position:sticky;top:0;z-index:10;background:rgba(23,20,42,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 20px}
+.top-in{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.top-row{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:700;color:var(--muted)}
+.brand{display:flex;align-items:center;gap:8px}
+.brand i{width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--ink);display:grid;place-items:center;font-style:normal;font-family:var(--display);font-weight:800;font-size:.8rem}
+.progress{height:6px;border-radius:999px;background:var(--bg-2);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s ease}
+
+/* chapters */
+.ch{display:none;padding-top:36px;animation:in .35s ease}
+.ch.on{display:block}
+@keyframes in{from{opacity:.4;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.callout{border-left:4px solid var(--accent);background:var(--bg-2);border-radius:0 14px 14px 0;padding:16px 18px}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center;text-align:center}
+.flow div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 8px;font-weight:700;font-size:.92rem;min-width:0}
+.flow div small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;margin-top:2px}
+.flow span{color:var(--accent);font-weight:800}
+@media (max-width:480px){.flow{grid-template-columns:1fr}.flow span{transform:rotate(90deg)}}
+.ideas{display:flex;flex-direction:column;gap:12px}
+.idea{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.idea .ic{width:44px;height:44px;border-radius:12px;background:var(--bg-2);display:grid;place-items:center;font-size:1.4rem}
+.idea div{min-width:0}
+.idea b{display:block}
+.idea span{color:var(--muted);font-size:.93rem}
+.locked{position:relative;overflow:hidden}
+.locked .blur{filter:blur(5px);user-select:none;pointer-events:none;opacity:.7}
+.locked .lock{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;background:linear-gradient(180deg,transparent,rgba(23,20,42,.85) 45%)}
+.lock b{display:block;font-family:var(--display);font-size:1.15rem}
+.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.check li label{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--accent);margin-top:2px;flex:none}
+.check li label span{min-width:0}
+.check b{display:block}
+.check small{color:var(--muted);font-size:.92rem}
+.mistakes{display:flex;flex-direction:column;gap:12px}
+.mistake{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.mistake b{color:var(--danger)}
+
+/* quiz */
+.q{display:flex;flex-direction:column;gap:10px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--card);border:1.5px solid var(--line);color:var(--fg);border-radius:14px;padding:14px 16px;font:inherit;cursor:pointer;transition:border-color .15s}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:#352d58}
+.result{display:none;border:2px solid var(--accent);border-radius:20px;padding:22px;background:linear-gradient(160deg,#3a3060,#262142)}
+.result.on{display:flex;flex-direction:column;gap:10px}
+
+/* buttons */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(23,20,42,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px))}
+.nav-in{max-width:680px;margin:0 auto;display:flex;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--ink);font-family:var(--display);font-weight:800;font-size:1.05rem;border:0;border-radius:14px;padding:15px 20px;text-decoration:none;cursor:pointer;flex:1}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line);flex:0 0 auto}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.btn[disabled]{opacity:.35;cursor:default}
+
+/* offer */
+.offer{background:var(--card);border:2px solid var(--accent);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price .now{font-family:var(--display);font-weight:800;font-size:2.8rem;line-height:1}
+.price .was{color:var(--muted);font-size:1.2rem;text-decoration:line-through;text-decoration-color:var(--danger);text-decoration-thickness:2px}
+.incl{margin:0;padding-left:1.1em;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.paybox{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.num{font-family:var(--display);font-weight:800;font-size:1.45rem;letter-spacing:.02em;user-select:all;font-variant-numeric:tabular-nums}
+.paybox small{display:block;color:var(--muted);font-size:.85rem}
+.copy{background:var(--fg);color:var(--ink);border:0;border-radius:10px;padding:10px 14px;font:700 .9rem var(--body);cursor:pointer}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 180px;font-size:1rem}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <div class="top-row"><span class="brand"><i>P</i> Etsy Starter Guide</span><span id="stepLabel">1 / 7</span></div>
+  <div class="progress"><i id="prog"></i></div>
+</div></div>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="ch on" data-title="Start">
+  <div class="stack">
+    <p class="eyebrow">Free guide · The Pharmacist Channel</p>
+    <h1>Start earning in dollars on Etsy, <span class="hl">from Pakistan.</span></h1>
+    <p class="muted">Arisha paid her semester fee in 2 months from a small Etsy shop she built in her free time. This free guide shows you how it works, what to sell, and your first steps this week.</p>
+    <div class="card stack" style="gap:10px">
+      <h3>In the next 10 minutes you'll learn</h3>
+      <p class="muted">✔ Why Etsy works for students in Pakistan<br>✔ How digital products make money while you sleep<br>✔ 5 products beginners can make for free<br>✔ Which product fits you (quick quiz)<br>✔ Your first 3 steps, starting today</p>
+    </div>
+    <p class="muted" style="font-size:.9rem">Tap <b class="hl">Next</b> below to begin.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="ch" data-title="Why Etsy">
+  <div class="stack">
+    <p class="eyebrow">Chapter 1</p>
+    <h2>Why Etsy is the easiest way to earn in dollars</h2>
+    <p class="muted">Etsy is a global marketplace with millions of buyers, mostly in the US, UK and Europe. They pay in dollars, pounds and euros. When you convert that to rupees, even small sales add up fast.</p>
+    <div class="callout"><b>The myth:</b> "Etsy doesn't work in Pakistan."<br><span class="hl"><b>The truth:</b></span> Pakistan is officially supported on Etsy through Payoneer, and your earnings can be withdrawn to your local bank account.</div>
+    <p class="muted">Most people never start because they believe the myth. That's good news for you: less competition from Pakistan.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="ch" data-title="How it works">
+  <div class="stack">
+    <p class="eyebrow">Chapter 2</p>
+    <h2>Digital products: make once, sell forever</h2>
+    <p class="muted">You don't need stock, a shop or a courier. You sell <b>digital files</b> that buyers download instantly.</p>
+    <div class="flow" aria-label="How a digital sale works">
+      <div>You make it<small>once, on Canva</small></div><span>→</span>
+      <div>Buyer pays<small>in dollars</small></div><span>→</span>
+      <div>Etsy delivers<small>automatically</small></div>
+    </div>
+    <div class="card stack" style="gap:8px">
+      <h3>Do the math</h3>
+      <p class="muted">A <b class="hl">$5</b> planner that sells <b class="hl">3 times a day</b> earns about <b class="hl">$450 a month</b>, before Etsy's fees. You made the file once. Every sale after that is repeat income.</p>
+      <p class="muted" style="font-size:.85rem">Example only. Your results depend on your product and effort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="ch" data-title="Product ideas">
+  <div class="stack">
+    <p class="eyebrow">Chapter 3</p>
+    <h2>5 products beginners can make for free</h2>
+    <div class="ideas">
+      <div class="idea"><span class="ic">📅</span><div><b>Planners & trackers</b><span>Study planners, habit trackers, budget sheets. Huge demand all year.</span></div></div>
+      <div class="idea"><span class="ic">📄</span><div><b>CV & resume templates</b><span>Clean, editable templates for job seekers abroad.</span></div></div>
+      <div class="idea"><span class="ic">🖼️</span><div><b>Printable wall art</b><span>Quotes, minimal prints and nursery art that buyers print at home.</span></div></div>
+      <div class="idea"><span class="ic">📚</span><div><b>Study notes & flashcards</b><span>Turn what you already study into a product students will buy.</span></div></div>
+      <div class="idea locked">
+        <div class="blur"><span class="ic">🔒</span><div><b>The #1 product for 2026</b><span>Low competition, high demand, easiest to make.</span></div></div>
+        <div class="lock"><div><b>🔒 Unlocked in the full guide</b><span class="muted" style="font-size:.9rem">Plus how to check any idea before you make it</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 quiz -->
+<section class="ch" data-title="Quiz">
+  <div class="stack">
+    <p class="eyebrow">Quick quiz</p>
+    <h2>Which product fits you?</h2>
+    <p class="muted">Answer 3 questions to find your best starting product.</p>
+    <div class="q" data-q="0"><h3>1. What do you enjoy most?</h3><div class="opts">
+      <button class="opt" data-v="plan">Organizing and planning</button>
+      <button class="opt" data-v="art">Design, colours and art</button>
+      <button class="opt" data-v="study">Studying and making notes</button>
+      <button class="opt" data-v="career">Writing and careers</button></div></div>
+    <div class="q" data-q="1"><h3>2. How much time can you give each week?</h3><div class="opts">
+      <button class="opt" data-v="plan">3–5 hours</button>
+      <button class="opt" data-v="art">5–10 hours</button>
+      <button class="opt" data-v="study">10+ hours</button></div></div>
+    <div class="q" data-q="2"><h3>3. What are you most confident with?</h3><div class="opts">
+      <button class="opt" data-v="plan">Excel or tables</button>
+      <button class="opt" data-v="art">Canva or design apps</button>
+      <button class="opt" data-v="study">My subject knowledge</button>
+      <button class="opt" data-v="career">Writing in English</button></div></div>
+    <div class="result" id="result" aria-live="polite">
+      <p class="eyebrow">Your best start</p>
+      <h2 id="resTitle"></h2>
+      <p class="muted" id="resText"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="ch" data-title="First steps">
+  <div class="stack">
+    <p class="eyebrow">Chapter 4</p>
+    <h2>Your first 3 steps this week</h2>
+    <ul class="check">
+      <li><label><input type="checkbox" id="c1"><span><b>Create a free Payoneer account</b><small>You'll need it to get paid. Use your real name exactly as on your CNIC.</small></span></label></li>
+      <li><label><input type="checkbox" id="c2"><span><b>Study 10 best-selling shops</b><small>Search your product on Etsy and look at what the top shops sell, their prices and their photos.</small></span></label></li>
+      <li><label><input type="checkbox" id="c3"><span><b>Make your first product on Canva</b><small>Don't aim for perfect. Aim for finished.</small></span></label></li>
+    </ul>
+    <div class="card stack" style="gap:10px">
+      <h3>3 mistakes that get beginners stuck</h3>
+      <div class="mistakes">
+        <div class="mistake"><b>Opening the shop with the wrong details</b><span class="muted">Mismatched names or info can get a new shop suspended before the first sale.</span></div>
+        <div class="mistake"><b>Copying someone else's design</b><span class="muted">It breaks Etsy's rules and gets listings removed.</span></div>
+        <div class="mistake"><b>Listing without research</b><span class="muted">Great products with the wrong titles and tags never get found.</span></div>
+      </div>
+      <p class="muted" style="font-size:.92rem">The full guide shows you exactly how to avoid each one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 offer -->
+<section class="ch" data-title="Next">
+  <div class="stack">
+    <p class="eyebrow">You've learned the basics</p>
+    <h2>Now get the full system, <span class="hl">step by step.</span></h2>
+    <p class="muted">This guide showed you <b>what</b> works. The full guide shows you <b>exactly how</b>: shop setup from Pakistan, listings that get found, pricing, your first sales, and getting paid in PKR.</p>
+    <div class="offer">
+      <span class="eyebrow">Early-bird price · <span class="timer" id="timer">ends 9 Oct</span></span>
+      <div class="price"><span class="now" id="pNow">PKR 2,500</span><span class="was" id="pWas">PKR 5,000</span></div>
+      <ul class="incl">
+        <li>Full step-by-step Etsy guide</li>
+        <li>The #1 product idea for 2026</li>
+        <li><b class="hl">Bonus:</b> live Q&amp;A session with Rafay</li>
+        <li>Only 20 early-bird seats</li>
+      </ul>
+      <div class="stack" style="gap:10px">
+        <h3>How to book</h3>
+        <p class="muted">1. Send PKR 2,500 on <b>Easypaisa</b>:</p>
+        <div class="paybox">
+          <div><span class="num" id="payNum">0316-2921745</span><small>Muhammad Rafay</small></div>
+          <button class="copy" id="copyBtn" type="button">Copy</button>
+        </div>
+        <p class="muted">2. Send the screenshot on WhatsApp or Instagram. You'll get your guide and Q&amp;A details.</p>
+        <div class="row">
+          <a class="btn" target="_blank" rel="noopener" href="https://wa.me/923162921745?text=Hi%20Rafay!%20I%20read%20the%20free%20Etsy%20guide%20and%20want%20to%20book%20my%20early-bird%20seat.">Book on WhatsApp</a>
+          <a class="btn ghost" style="flex:1 1 180px" target="_blank" rel="noopener" href="https://instagram.com/thepharmacistchannel">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="nav"><div class="nav-in">
+  <button class="btn ghost" id="back" type="button" disabled>Back</button>
+  <button class="btn" id="next" type="button">Next →</button>
+</div></div>
+
+<script>
+const chs=[...document.querySelectorAll(".ch")], N=chs.length;
+let i=0;
+const prog=document.getElementById("prog"), label=document.getElementById("stepLabel"),
+      back=document.getElementById("back"), next=document.getElementById("next");
+function show(k){
+  i=Math.max(0,Math.min(N-1,k));
+  chs.forEach((c,j)=>c.classList.toggle("on",j===i));
+  prog.style.width=((i+1)/N*100)+"%";
+  label.textContent=(i+1)+" / "+N;
+  back.disabled=i===0;
+  next.textContent = i===N-2 ? "See the full guide →" : i===N-1 ? "Book on WhatsApp →" : "Next →";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+back.onclick=()=>show(i-1);
+next.onclick=()=>{
+  if(i===N-1){window.open("https://wa.me/923162921745?text=Hi%20Rafay!%20I%20read%20the%20free%20Etsy%20guide%20and%20want%20to%20book%20my%20early-bird%20seat.","_blank");return;}
+  show(i+1);
+};
+
+// quiz
+const answers=[null,null,null];
+const results={
+  plan:["Planners & trackers","You like structure, and that's exactly what planner buyers pay for. Planners are one of the steadiest sellers on Etsy and easy to make in Canva or Excel."],
+  art:["Printable wall art","You have an eye for design. Printable art is quick to make, and one good design can be sold in many sizes."],
+  study:["Study notes & flashcards","Your knowledge is the product. Students worldwide buy clear, well-organised notes and flashcards."],
+  career:["CV & resume templates","Job seekers abroad pay for templates that look professional. Your writing skills give you an edge."]
+};
+document.querySelectorAll(".q").forEach(q=>{
+  const n=+q.dataset.q;
+  q.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    q.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));
+    b.classList.add("sel"); answers[n]=b.dataset.v;
+    if(answers.every(Boolean)){
+      const tally={}; answers.forEach(a=>tally[a]=(tally[a]||0)+1);
+      const best=answers[0]===answers[2]?answers[0]:Object.keys(tally).sort((a,b)=>tally[b]-tally[a])[0];
+      document.getElementById("resTitle").textContent=results[best][0];
+      document.getElementById("resText").textContent=results[best][1]+" The full guide shows you how to find what's selling in this category before you make anything.";
+      document.getElementById("result").classList.add("on");
+    }
+  });
+});
+
+// deadline
+const DEADLINE=new Date("2026-10-09T23:59:59+05:00").getTime();
+function tick(){
+  const left=DEADLINE-Date.now(), t=document.getElementById("timer");
+  if(left<=0){t.textContent="ended";document.getElementById("pNow").textContent="PKR 5,000";document.getElementById("pWas").hidden=true;return;}
+  const s=Math.floor(left/1000), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60);
+  t.textContent="ends in "+(d?d+"d ":"")+h+"h "+m+"m";
+}
+tick(); setInterval(tick,30000);
+
+// copy
+document.getElementById("copyBtn").onclick=()=>{
+  const btn=document.getElementById("copyBtn");
+  const fb=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("payNum"));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Selected";};
+  try{navigator.clipboard.writeText("03162921745").then(()=>{btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy",2000)},fb);}catch(e){fb();}
+};
+show(0);
+</script>
+</body>
+</html>
